@@ -5,10 +5,14 @@ import styles from "./ToastShelf.module.css";
 import { toastContext } from "../Context";
 
 function ToastShelf() {
-  const { toasts, clearToasts } = React.useContext(toastContext);
-  useEscapeKey(clearToasts);
+  const { toasts } = React.useContext(toastContext);
   return (
-    <ol className={styles.wrapper}>
+    <ol
+      className={styles.wrapper}
+      role="region"
+      aria-live="polite"
+      aria-label="notifications"
+    >
       {toasts.length
         ? toasts.map((toast) => {
             return (
@@ -23,19 +27,5 @@ function ToastShelf() {
     </ol>
   );
 }
-
-const useEscapeKey = (callback) => {
-  React.useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === "Escape") {
-        callback();
-      }
-    };
-    window.addEventListener("keydown", handleEscape);
-    return () => {
-      window.removeEventListener("keydown", handleEscape);
-    };
-  });
-};
 
 export default ToastShelf;
