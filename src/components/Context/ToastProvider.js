@@ -14,10 +14,14 @@ function ToastProvider({ children }) {
       return prevToasts.filter((toast) => toast.id !== id);
     });
   }
+  function clearToasts() {
+    setToasts([]);
+  }
   const value = {
     toasts,
     addToast,
     removeToast,
+    clearToasts,
   };
   return (
     <toastContext.Provider value={value}>{children}</toastContext.Provider>
