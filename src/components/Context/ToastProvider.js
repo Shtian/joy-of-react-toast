@@ -4,8 +4,10 @@ export const toastContext = React.createContext();
 
 function ToastProvider({ children }) {
   const [toasts, setToasts] = React.useState([]);
-
-  useEscapeKey(clearToasts);
+  const handleEscape = React.useCallback(() => {
+    clearToasts();
+  }, []);
+  useEscapeKey(handleEscape);
 
   function addToast(toast) {
     setToasts((prevToasts) => {
@@ -41,6 +43,7 @@ const useEscapeKey = (callback) => {
     return () => {
       window.removeEventListener("keydown", handleEscape);
     };
-  });
+  }, [callback]);
 };
+
 export default ToastProvider;
